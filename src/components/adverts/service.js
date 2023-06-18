@@ -1,4 +1,5 @@
 import client from '../../api/client';
+import { withFormData } from '../../utils/converters';
 
 const advertsPath = '/v1/adverts';
 
@@ -18,10 +19,10 @@ export const deleteAdvert = advertId => {
   return client.delete(`${advertsPath}/${advertId}`);
 };
 
-export const createAdvert = newAdvert => {
-  return client.post(advertsPath, newAdvert, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-};
+export const createAdvert = withFormData(newAdvert => {
+  return client.post(advertsPath, newAdvert);
+});
+
+// export const createAdvert = newAdvert => {
+//   return client.post(advertsPath, objectToFormData(newAdvert));
+// };

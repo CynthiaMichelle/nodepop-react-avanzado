@@ -1,9 +1,8 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-
-import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts';
-import { LoginPage, RequireAuth } from '../auth';
-import NotFoundPage from './NotFoundPage';
-import Layout from '../layout';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AdvertPage, AdvertsPage, NewAdvertPage } from "../adverts";
+import { LoginPage, RequireAuth } from "../auth";
+import NotFoundPage from "./NotFoundPage";
+import Layout from "../layout";
 
 function App() {
   return (

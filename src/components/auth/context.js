@@ -3,7 +3,7 @@ import T from 'prop-types';
 
 const AuthContext = createContext();
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   const authValue = useContext(AuthContext);
   return authValue;
 };
@@ -20,6 +20,8 @@ export const AuthProvider = ({ isInitiallyLogged, children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const AuthConsumer = AuthContext.Consumer;
 
 AuthProvider.propTypes = {
   isInitallyLogged: T.bool,

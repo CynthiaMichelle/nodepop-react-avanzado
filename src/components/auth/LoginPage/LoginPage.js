@@ -1,32 +1,30 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-import { useAuth } from '../context';
-import { login } from '../service';
-import LoginForm from './LoginForm';
-import useMutation from '../../../hooks/useMutation';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import LoginForm from "./LoginForm";
+import { useDispatch, useSelector } from "react-redux";
+import { authLogin, uiResetError } from "../../../store/actions";
+import { getUIstate } from "../../../store/selectors";
 
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { handleLogin } = useAuth();
-  const { isLoading, error, execute, resetError } = useMutation(login);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUIstate);
+  const handleResetError = () => dispatch(uiResetError());
 
-  const handleSubmit = credentials => {
-    execute(credentials)
-      .then(handleLogin)
-      .then(() => {
-        const from = location.state?.from?.pathname || '/';
-        navigate(from);
-      });
+  const handleSubmit = async (credentials) => {
+    await dispatch(authLogin(credentials));
+    const from = location.state?.from?.pathname || "/";
+    navigate(from, { replace: true });
   };
 
   return (
     <div>
+      <h1>Log In</h1>
       <LoginForm onSubmit={handleSubmit} isLoading={isLoading} />
-      {isLoading && <p>...login in nodepop</p>}
+      {isLoading && <p>...login in nodepop </p>}
       {error && (
-        <div onClick={resetError} style={{ color: 'red' }}>
+        <div onClick={handleResetError} style={{ color: "red" }}>
           {error.message}
         </div>
       )}

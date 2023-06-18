@@ -1,16 +1,18 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-import { createAdvert } from '../service';
+import { advertCreate } from '../../../store/actions';
+import { getUIstate } from '../../../store/selectors';
 import NewAdvertForm from './NewAdvertForm';
-import useMutation from '../../../hooks/useMutation';
 
 function NewAdvertPage() {
   const navigate = useNavigate();
-  const { execute, isLoading } = useMutation(createAdvert);
-
-  const handleSubmit = newAdvert => {
-    execute(newAdvert).then(({ id }) => navigate(`/adverts/${id}`));
+  const dispatch = useDispatch()
+  const { isLoading } = useSelector(getUIstate);
+ 
+  const handleSubmit = async newAdvert => {
+    await dispatch(advertCreate(newAdvert))
+    .then(({ id }) => navigate(`/adverts/${id}`));
   };
 
   return <NewAdvertForm onSubmit={handleSubmit} isLoading={isLoading} />;

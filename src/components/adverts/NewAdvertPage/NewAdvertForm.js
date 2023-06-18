@@ -27,6 +27,7 @@ function NewAdvertForm({ onSubmit, isLoading }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input name="name" value={name} onChange={handleChange} />
+      <span>Sale</span>
       <input
         type="checkbox"
         name="sale"

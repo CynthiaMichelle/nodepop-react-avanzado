@@ -1,11 +1,19 @@
-import React from 'react';
-
-import { getTags } from '../service';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { tagsLoad } from '../../../store/actions';
+import { getStateTags } from '../../../store/selectors';
 import { CheckboxGroup } from '../../common';
-import useQuery from '../../../hooks/useQuery';
 
 function SelectTags(props) {
-  const { data: tags = [] } = useQuery(getTags);
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(tagsLoad())
+    
+  },[dispatch])
+
+  const tags = useSelector((state)=>getStateTags(state))
+
   return <CheckboxGroup options={tags} {...props} />;
 }
 
